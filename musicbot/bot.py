@@ -1,43 +1,42 @@
+import asyncio
+import inspect
 import os
 import random
-import sys
-import time
 import shlex
 import shutil
-import inspect
+import sys
+import time
+import traceback
 import urllib
+from collections import defaultdict
+from datetime import timedelta
+from functools import wraps
+from io import BytesIO
+from random import choice, shuffle
+from textwrap import dedent
+from urllib import request
 
 import aiohttp
 import discord
-import asyncio
-import traceback
-from urllib import request
 from discord import utils
-from discord.object import Object
 from discord.enums import ChannelType
-from discord.voice_client import VoiceClient
 from discord.ext.commands.bot import _get_variable
+from discord.object import Object
+from discord.voice_client import VoiceClient
 
-from io import BytesIO
-from functools import wraps
-from textwrap import dedent
-from datetime import timedelta
-from random import choice, shuffle
-from collections import defaultdict
-
-from musicbot import best_match, auto_gen, draw_type, constants, edit_image
-from musicbot.playlist import Playlist
-from musicbot.player import MusicPlayer
+from musicbot import auto_gen, constants
+from musicbot.lib import best_match, draw_type
 from musicbot.config import Config, ConfigDefaults
+from musicbot.lib import edit_image
 from musicbot.permissions import Permissions, PermissionsDefaults
+from musicbot.player import MusicPlayer
+from musicbot.playlist import Playlist
 from musicbot.utils import load_file, write_file, sane_round_int
-
-from . import exceptions
 from . import downloader
-from .opus_loader import load_opus_lib
-from .constants import VERSION as BOTVERSION
+from . import exceptions
 from .constants import DISCORD_MSG_CHAR_LIMIT, AUDIO_CACHE_PATH
-
+from .constants import VERSION as BOTVERSION
+from .opus_loader import load_opus_lib
 
 load_opus_lib()
 
